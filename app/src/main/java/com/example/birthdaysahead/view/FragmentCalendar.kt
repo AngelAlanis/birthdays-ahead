@@ -12,6 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.birthdaysahead.R
 import com.example.birthdaysahead.databinding.CalendarDayLayoutBinding
 import com.example.birthdaysahead.databinding.CalendarHeaderBinding
@@ -34,8 +36,9 @@ class FragmentCalendar : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
+
+    private val eventsAdapter = CalendarEventAdapter()
     private lateinit var events: Map<LocalDate, List<Event>>
-    private lateinit var event: Event
 
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
     private val titleFormatter = DateTimeFormatter.ofPattern("MMM yyyy")
@@ -60,6 +63,14 @@ class FragmentCalendar : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.eventsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            adapter = eventsAdapter
+        }
+
+        eventsAdapter.notifyDataSetChanged()
+
         setupCalendar()
     }
 
@@ -99,6 +110,7 @@ class FragmentCalendar : Fragment() {
                     // Check the day position as we do not want to select in or out dates.
                     if (day.position == DayPosition.MonthDate) {
                         selectDate(day.date)
+                        updateAdapterForDate(day.date)
                     }
                 }
             }
@@ -130,7 +142,8 @@ class FragmentCalendar : Fragment() {
 
                 // Put the views in a list to iterate through them.
                 val views = listOf(profileView1, profileView2, profileView3, profileView4)
-                val texts = listOf(profileViewText1, profileViewText2, profileViewText3, profileViewText4)
+                val texts =
+                    listOf(profileViewText1, profileViewText2, profileViewText3, profileViewText4)
 
                 textView.text =
                     data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
@@ -259,8 +272,20 @@ class FragmentCalendar : Fragment() {
                 titleFormatter.format(it.yearMonth)
             }
 
+            selectedDate?.let { newDate ->
+                selectedDate = null
+                binding.calendarView.notifyDateChanged(newDate)
+                updateAdapterForDate(null)
+            }
+
             selectDate(it.yearMonth.atDay(1))
         }
+    }
+
+    private fun updateAdapterForDate(date: LocalDate?) {
+        eventsAdapter.eventsList.clear()
+        eventsAdapter.eventsList.addAll(events[date].orEmpty())
+        eventsAdapter.notifyDataSetChanged()
     }
 
     private fun changeBackgroundColor(context: Context, color: Int): Drawable? {
