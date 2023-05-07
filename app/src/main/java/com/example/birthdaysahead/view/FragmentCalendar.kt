@@ -12,14 +12,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.birthdaysahead.R
 import com.example.birthdaysahead.databinding.CalendarDayLayoutBinding
 import com.example.birthdaysahead.databinding.CalendarHeaderBinding
 import com.example.birthdaysahead.databinding.FragmentCalendarBinding
+import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.model.EventProvider
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -279,6 +282,10 @@ class FragmentCalendar : Fragment() {
             }
 
             selectDate(it.yearMonth.atDay(1))
+        }
+
+        binding.fabNew.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_fragmentCalendar_to_newEventFragment)
         }
     }
 
