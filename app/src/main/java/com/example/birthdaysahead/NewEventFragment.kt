@@ -1,6 +1,8 @@
 package com.example.birthdaysahead
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,10 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.TypeOfEvent
+import com.example.birthdaysahead.utils.changeBackgroundColor
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.nvt.color.ColorPickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,7 +22,8 @@ class NewEventFragment : Fragment() {
 
     private lateinit var binding: NewEventLayoutBinding
 
-    private val typeOfEvents: Array<String> = TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
+    private val typeOfEvents: Array<String> =
+        TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +63,26 @@ class NewEventFragment : Fragment() {
             if (!text.isNullOrEmpty()) {
                 binding.profileChar.text = text[0].toString()
             }
+        }
+
+        binding.colorSelector.setOnClickListener {
+            val currentColor: Int = (binding.colorSelector.background as ColorDrawable).color
+
+            val colorPicker = ColorPickerDialog(
+                context,
+                currentColor, // color init
+                false, // true is show alpha
+                object : ColorPickerDialog.OnColorPickerListener {
+                    override fun onCancel(dialog: ColorPickerDialog?) {
+
+                    }
+
+                    override fun onOk(dialog: ColorPickerDialog?, colorPicker: Int) {
+                        binding.profileBackground.background = changeBackgroundColor(requireContext(), colorPicker)
+                        binding.colorSelector.setBackgroundColor(colorPicker)
+                    }
+                })
+            colorPicker.show()
         }
     }
 

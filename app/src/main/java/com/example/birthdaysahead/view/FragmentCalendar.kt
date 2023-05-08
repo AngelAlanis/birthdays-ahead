@@ -1,8 +1,6 @@
 package com.example.birthdaysahead.view
 
 import android.content.Context
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +17,9 @@ import com.example.birthdaysahead.R
 import com.example.birthdaysahead.databinding.CalendarDayLayoutBinding
 import com.example.birthdaysahead.databinding.CalendarHeaderBinding
 import com.example.birthdaysahead.databinding.FragmentCalendarBinding
-import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.model.EventProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.example.birthdaysahead.utils.changeBackgroundColor
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -219,8 +216,7 @@ class FragmentCalendar : Fragment() {
         if (event != null) {
             event.forEachIndexed { index, event ->
                 if (index < views.size) {
-                    views[index].background =
-                        changeBackgroundColor(context, event.color)
+                    views[index].background = changeBackgroundColor(context, event.color)
                     texts[index].text = event.iconChar.toString()
                     views[index].visibility = View.VISIBLE
                     texts[index].visibility = View.VISIBLE
@@ -293,14 +289,6 @@ class FragmentCalendar : Fragment() {
         eventsAdapter.eventsList.clear()
         eventsAdapter.eventsList.addAll(events[date].orEmpty())
         eventsAdapter.notifyDataSetChanged()
-    }
-
-    private fun changeBackgroundColor(context: Context, color: Int): Drawable? {
-        val drawable =
-            ContextCompat.getDrawable(context, R.drawable.day_profile_background)?.mutate()
-        drawable?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-
-        return drawable
     }
 
     private fun selectDate(date: LocalDate) {
