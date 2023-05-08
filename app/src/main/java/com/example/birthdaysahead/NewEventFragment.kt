@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
+import com.example.birthdaysahead.model.TypeOfEvent
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -14,6 +17,8 @@ import java.util.*
 class NewEventFragment : Fragment() {
 
     private lateinit var binding: NewEventLayoutBinding
+
+    private val typeOfEvents: Array<String> = TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +30,9 @@ class NewEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (binding.eventEditText as? MaterialAutoCompleteTextView)?.setSimpleItems(typeOfEvents)
+
         initListeners()
     }
 
@@ -43,6 +51,13 @@ class NewEventFragment : Fragment() {
             }
 
             materialDatePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
+        }
+
+        binding.nameEditText.addTextChangedListener {
+            val text = binding.nameEditText.text?.toString()
+            if (!text.isNullOrEmpty()) {
+                binding.profileChar.text = text[0].toString()
+            }
         }
     }
 
