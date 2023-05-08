@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.TypeOfEvent
 import com.example.birthdaysahead.utils.changeBackgroundColor
+import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.nvt.color.ColorPickerDialog
@@ -45,9 +46,21 @@ class NewEventFragment : Fragment() {
         binding.dateEditText.setOnClickListener {
             val calendar = Calendar.getInstance()
 
+            val currentYear = calendar.get(Calendar.YEAR)
+            val maxYear = currentYear + 5
+
+            val maxDate = calendar.apply {
+                set(Calendar.YEAR, maxYear)
+            }.timeInMillis
+
+            val calendarConstraints = CalendarConstraints.Builder()
+                .setEnd(maxDate)
+                .build()
+
             val materialDatePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select the birthdate")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .setCalendarConstraints(calendarConstraints)
                 .build()
 
             materialDatePicker.addOnPositiveButtonClickListener {
