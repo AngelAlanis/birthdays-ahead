@@ -9,7 +9,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.birthdaysahead.R
+import com.example.birthdaysahead.databinding.FragmentNewEventBinding
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
+import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.model.TypeOfEvent
 import com.example.birthdaysahead.utils.changeBackgroundColor
 import com.google.android.material.datepicker.CalendarConstraints
@@ -17,15 +19,43 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.nvt.color.ColorPickerDialog
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 class NewEventFragment : Fragment() {
 
     private lateinit var binding: NewEventLayoutBinding
+    private lateinit var selectedDate: LocalDate
 
-    private val typeOfEvents: Array<String> =
-        TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
+    private val format = "dd/MM/yyyy"
+    private val formatter = SimpleDateFormat(format, Locale.getDefault())
+    private val selectionFormatter = DateTimeFormatter.ofPattern(format)
+
+    private val typeOfEvents: Array<String> = TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
+
+    companion object {
+        private const val ARG_SELECTED_DATE = "selected_date"
+        fun newInstance(selectedDate: LocalDate): NewEventFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_SELECTED_DATE, selectedDate)
+            }
+
+            val fragment = NewEventFragment()
+            fragment.arguments = args
+
+            return fragment
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        arguments?.let {
+            selectedDate = it.getSerializable(ARG_SELECTED_DATE) as LocalDate
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +69,7 @@ class NewEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (binding.eventEditText as? MaterialAutoCompleteTextView)?.setSimpleItems(typeOfEvents)
+        binding.dateEditText.setText(selectionFormatter.format(selectedDate))
 
         initListeners()
     }
@@ -103,13 +134,26 @@ class NewEventFragment : Fragment() {
         binding.btnCancel.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
+        binding.btnAdd.setOnClickListener {
+            val name: String = binding.nameEditText.text.toString()
+            val date: LocalDate = convertToDate(binding.dateEditText.text.toString())
+            val typeOfEvent: TypeOfEvent =
+                TypeOfEvent.valueOf(binding.eventEditText.text.toString())
+            val color: Int = (binding.colorSelector.background as ColorDrawable).color
+
+            val event = Event(name, date, color, typeOfEvent)
+
+
+        }
     }
 
     private fun updateEditText(date: Date) {
-        val format = "dd/MM/yyyy"
-        val formatter = SimpleDateFormat(format, Locale.getDefault())
-        formatter.timeZone = TimeZone.getTimeZone("UTC")
-
         binding.dateEditText.setText(formatter.format(date).toString())
+    }
+
+    private fun convertToDate(date: String): LocalDate {
+        val formatter = DateTimeFormatter.ofPattern(format)
+        return LocalDate.parse(date, formatter)
     }
 }

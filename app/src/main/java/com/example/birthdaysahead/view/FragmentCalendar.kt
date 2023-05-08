@@ -39,7 +39,7 @@ class FragmentCalendar : Fragment() {
     private val binding get() = _binding!!
 
     private val eventsAdapter = CalendarEventAdapter()
-    private lateinit var events: Map<LocalDate, List<Event>>
+    var events = mutableMapOf<LocalDate, List<Event>>()
 
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
     private val titleFormatter = DateTimeFormatter.ofPattern("MMM yyyy")
@@ -50,7 +50,7 @@ class FragmentCalendar : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        events = EventProvider.events.groupBy { it.date }
+        events = EventProvider.events.groupBy { it.date }.toMutableMap()
     }
 
     override fun onCreateView(
@@ -282,7 +282,7 @@ class FragmentCalendar : Fragment() {
         }
 
         binding.fabNew.setOnClickListener {
-            val fragmentNewEvent = NewEventFragment()
+            val fragmentNewEvent = NewEventFragment.newInstance(selectedDate!!)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.nav_host_fragment, fragmentNewEvent)
                 .addToBackStack(null)
