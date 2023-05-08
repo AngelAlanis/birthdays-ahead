@@ -2,12 +2,12 @@ package com.example.birthdaysahead
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.TypeOfEvent
 import com.example.birthdaysahead.utils.changeBackgroundColor
@@ -78,11 +78,16 @@ class NewEventFragment : Fragment() {
                     }
 
                     override fun onOk(dialog: ColorPickerDialog?, colorPicker: Int) {
-                        binding.profileBackground.background = changeBackgroundColor(requireContext(), colorPicker)
+                        binding.profileBackground.background =
+                            changeBackgroundColor(requireContext(), colorPicker)
                         binding.colorSelector.setBackgroundColor(colorPicker)
                     }
                 })
             colorPicker.show()
+        }
+
+        binding.btnCancel.setOnClickListener {
+            findNavController().navigate(R.id.action_newEventFragment_to_fragmentCalendar)
         }
     }
 
