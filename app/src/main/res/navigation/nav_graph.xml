@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/newEventFragment"
-        android:name="com.example.birthdaysahead.NewEventFragment"
+        android:name="com.example.birthdaysahead.view.NewEventFragment"
         android:label="fragment_new_event"
         tools:layout="@layout/fragment_new_event" >
         <action

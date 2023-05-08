@@ -1,4 +1,4 @@
-package com.example.birthdaysahead
+package com.example.birthdaysahead.view
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.birthdaysahead.R
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.TypeOfEvent
 import com.example.birthdaysahead.utils.changeBackgroundColor
@@ -100,7 +101,7 @@ class NewEventFragment : Fragment() {
         }
 
         binding.btnCancel.setOnClickListener {
-            findNavController().navigate(R.id.action_newEventFragment_to_fragmentCalendar)
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
