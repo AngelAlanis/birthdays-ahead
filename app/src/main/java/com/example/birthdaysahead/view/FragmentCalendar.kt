@@ -46,6 +46,8 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
     private val today = LocalDate.now()
     private var selectedDate: LocalDate? = null
 
+    private var eventCreationListener: NewEventFragment.EventCreationListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         events = EventProvider.events.groupBy { it.date }.toMutableMap()
@@ -281,8 +283,9 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
         binding.fabNew.setOnClickListener {
             val fragmentNewEvent = NewEventFragment.newInstance(selectedDate!!)
-            fragmentNewEvent.eventCreatorListener = this
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            fragmentNewEvent.setEventCreationListener(this)
+
+            val transaction = parentFragmentManager.beginTransaction()
                 .add(R.id.nav_host_fragment, fragmentNewEvent)
                 .addToBackStack(null)
 

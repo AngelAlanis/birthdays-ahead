@@ -37,7 +37,7 @@ class NewEventFragment : Fragment() {
         fun onEventCreated(event: Event)
     }
 
-    var eventCreatorListener: EventCreationListener? = null
+    private var eventCreationListener: EventCreationListener? = null
 
     companion object {
         private const val ARG_SELECTED_DATE = "selected_date"
@@ -76,6 +76,10 @@ class NewEventFragment : Fragment() {
         binding.dateEditText.setText(selectionFormatter.format(selectedDate))
 
         initListeners()
+    }
+
+    fun setEventCreationListener(listener: NewEventFragment.EventCreationListener) {
+        eventCreationListener = listener
     }
 
     private fun initListeners() {
@@ -142,11 +146,12 @@ class NewEventFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             val name: String = binding.nameEditText.text.toString()
             val date: LocalDate = convertToDate(binding.dateEditText.text.toString())
-            val typeOfEvent: TypeOfEvent = TypeOfEvent.valueOf(binding.eventEditText.text.toString().uppercase())
+            val typeOfEvent: TypeOfEvent =
+                TypeOfEvent.valueOf(binding.eventEditText.text.toString().uppercase())
             val color: Int = (binding.colorSelector.background as ColorDrawable).color
 
             val event = Event(name, date, color, typeOfEvent)
-            createEvent(event)
+            sendEventToCalendar(event)
             requireActivity().supportFragmentManager.popBackStack()
         }
     }
@@ -160,8 +165,8 @@ class NewEventFragment : Fragment() {
         return LocalDate.parse(date, formatter)
     }
 
-    private fun createEvent(newEvent: Event){
-        eventCreatorListener?.onEventCreated(newEvent)
+    private fun sendEventToCalendar(newEvent: Event) {
+        eventCreationListener?.onEventCreated(newEvent)
     }
 
 }
