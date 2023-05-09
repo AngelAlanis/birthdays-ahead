@@ -7,9 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.birthdaysahead.R
-import com.example.birthdaysahead.databinding.FragmentNewEventBinding
 import com.example.birthdaysahead.databinding.NewEventLayoutBinding
 import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.model.TypeOfEvent
@@ -33,7 +30,14 @@ class NewEventFragment : Fragment() {
     private val formatter = SimpleDateFormat(format, Locale.getDefault())
     private val selectionFormatter = DateTimeFormatter.ofPattern(format)
 
-    private val typeOfEvents: Array<String> = TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
+    private val typeOfEvents: Array<String> =
+        TypeOfEvent.values().map { it.getFormattedName() }.toTypedArray()
+
+    interface EventCreationListener {
+        fun onEventCreated(event: Event)
+    }
+
+    var eventCreatorListener: EventCreationListener? = null
 
     companion object {
         private const val ARG_SELECTED_DATE = "selected_date"
@@ -138,13 +142,12 @@ class NewEventFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             val name: String = binding.nameEditText.text.toString()
             val date: LocalDate = convertToDate(binding.dateEditText.text.toString())
-            val typeOfEvent: TypeOfEvent =
-                TypeOfEvent.valueOf(binding.eventEditText.text.toString())
+            val typeOfEvent: TypeOfEvent = TypeOfEvent.valueOf(binding.eventEditText.text.toString().uppercase())
             val color: Int = (binding.colorSelector.background as ColorDrawable).color
 
             val event = Event(name, date, color, typeOfEvent)
-
-
+            createEvent(event)
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 
@@ -156,4 +159,9 @@ class NewEventFragment : Fragment() {
         val formatter = DateTimeFormatter.ofPattern(format)
         return LocalDate.parse(date, formatter)
     }
+
+    private fun createEvent(newEvent: Event){
+        eventCreatorListener?.onEventCreated(newEvent)
+    }
+
 }

@@ -32,8 +32,9 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
 
-class FragmentCalendar : Fragment() {
+class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
@@ -283,6 +284,7 @@ class FragmentCalendar : Fragment() {
 
         binding.fabNew.setOnClickListener {
             val fragmentNewEvent = NewEventFragment.newInstance(selectedDate!!)
+            fragmentNewEvent.eventCreatorListener = this
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.nav_host_fragment, fragmentNewEvent)
                 .addToBackStack(null)
@@ -307,8 +309,21 @@ class FragmentCalendar : Fragment() {
         }
     }
 
+    private fun addEventToMap(event: Event) {
+        val eventDate = event.date
+        events[eventDate] = events[eventDate].orEmpty().plus(event)
+        updateAdapterForDate(eventDate)
+
+        _binding?.calendarView?.notifyDateChanged(eventDate)
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onEventCreated(event: Event) {
+        addEventToMap(event)
     }
 }
