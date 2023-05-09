@@ -10,8 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.birthdaysahead.R
@@ -32,7 +30,6 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
@@ -288,7 +285,8 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.nav_host_fragment, fragmentNewEvent)
                 .addToBackStack(null)
-                .commit()
+
+            transaction.commit()
         }
     }
 
