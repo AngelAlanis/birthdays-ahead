@@ -139,8 +139,7 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
                 // Put the views in a list to iterate through them.
                 val profileViews = listOf(profileView1, profileView2, profileView3, profileView4)
 
-                textView.text =
-                    data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
+                textView.text = data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
 
                 // Validation so in or out dates are not affected.
                 if (data.position == DayPosition.MonthDate) {
