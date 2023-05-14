@@ -131,7 +131,7 @@ class NewEventFragment : Fragment() {
                     }
 
                     override fun onOk(dialog: ColorPickerDialog?, colorPicker: Int) {
-                        binding.profileBackground.background =
+                        binding.profileChar.background =
                             changeBackgroundColor(requireContext(), colorPicker)
                         binding.colorSelector.setBackgroundColor(colorPicker)
                     }

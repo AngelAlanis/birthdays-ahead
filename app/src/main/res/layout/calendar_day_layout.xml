@@ -22,105 +22,65 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="22" />
 
-    <View
+    <TextView
         android:id="@+id/profileView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
         android:background="@drawable/day_profile_background"
+        android:gravity="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/profileView3"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/profileView2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendarDayText"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="M" />
 
     <TextView
-        android:id="@+id/profileView1Text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="M"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/profileView1"
-        app:layout_constraintEnd_toEndOf="@id/profileView1"
-        app:layout_constraintStart_toStartOf="@id/profileView1"
-        app:layout_constraintTop_toTopOf="@id/profileView1" />
-
-    <View
         android:id="@+id/profileView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
         android:background="@drawable/day_profile_background"
+        android:gravity="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/profileView4"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/profileView1"
         app:layout_constraintTop_toBottomOf="@id/calendarDayText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="F" />
 
     <TextView
-        android:id="@+id/profileView2Text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="F"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/profileView2"
-        app:layout_constraintEnd_toEndOf="@id/profileView2"
-        app:layout_constraintStart_toStartOf="@id/profileView2"
-        app:layout_constraintTop_toTopOf="@id/profileView2" />
-
-    <View
         android:id="@+id/profileView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
         android:background="@drawable/day_profile_background"
+        android:gravity="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@id/profileView4"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileView1" />
+        app:layout_constraintTop_toBottomOf="@id/profileView1"
+        tools:text="S" />
 
     <TextView
-        android:id="@+id/profileView3Text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="S"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/profileView3"
-        app:layout_constraintEnd_toEndOf="@id/profileView3"
-        app:layout_constraintStart_toStartOf="@id/profileView3"
-        app:layout_constraintTop_toTopOf="@id/profileView3" />
-
-    <View
         android:id="@+id/profileView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
         android:background="@drawable/day_profile_background"
+        android:gravity="center"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/profileView3"
-        app:layout_constraintTop_toBottomOf="@id/profileView2" />
+        app:layout_constraintTop_toBottomOf="@id/profileView2"
+        tools:text="L" />
 
-    <TextView
-        android:id="@+id/profileView4Text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="L"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/profileView4"
-        app:layout_constraintEnd_toEndOf="@id/profileView4"
-        app:layout_constraintStart_toStartOf="@id/profileView4"
-        app:layout_constraintTop_toTopOf="@id/profileView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
