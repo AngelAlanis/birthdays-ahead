@@ -10,26 +10,17 @@
     android:paddingEnd="16dp"
     android:paddingBottom="64dp">
 
-    <View
-        android:id="@+id/profile_background"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="@drawable/day_profile_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/profile_char"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/profile_background"
-        app:layout_constraintEnd_toEndOf="@id/profile_background"
-        app:layout_constraintStart_toStartOf="@id/profile_background"
-        app:layout_constraintTop_toTopOf="@id/profile_background"
+        android:background="@drawable/day_profile_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="M" />
 
     <TextView
@@ -42,7 +33,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_background" />
+        app:layout_constraintTop_toBottomOf="@id/profile_char" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameTextField"

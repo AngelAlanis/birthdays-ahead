@@ -136,18 +136,10 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
                 val profileView3 = container.binding.profileView3
                 val profileView4 = container.binding.profileView4
 
-                val profileViewText1 = container.binding.profileView1Text
-                val profileViewText2 = container.binding.profileView2Text
-                val profileViewText3 = container.binding.profileView3Text
-                val profileViewText4 = container.binding.profileView4Text
-
                 // Put the views in a list to iterate through them.
-                val views = listOf(profileView1, profileView2, profileView3, profileView4)
-                val texts =
-                    listOf(profileViewText1, profileViewText2, profileViewText3, profileViewText4)
+                val profileViews = listOf(profileView1, profileView2, profileView3, profileView4)
 
-                textView.text =
-                    data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
+                textView.text = data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
 
                 // Validation so in or out dates are not affected.
                 if (data.position == DayPosition.MonthDate) {
@@ -160,7 +152,7 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
                     val event = events[data.date]
 
-                    setEventViewsInDay(event, views, context, texts)
+                    setEventViewsInDay(event, profileViews, context)
 
                     setDayBackground(data, parentLayout)
 
@@ -172,11 +164,8 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
                             R.color.text_grey
                         )
                     )
-                    views.forEach { view ->
+                    profileViews.forEach { view ->
                         view.visibility = View.INVISIBLE
-                    }
-                    texts.forEach { text ->
-                        text.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -209,33 +198,27 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
     private fun setEventViewsInDay(
         event: List<Event>?,
-        views: List<View>,
+        profileViews: List<TextView>,
         context: Context,
-        texts: List<TextView>
     ) {
         // If there is at least one event.
         if (event != null) {
             event.forEachIndexed { index, event ->
-                if (index < views.size) {
-                    views[index].background = changeBackgroundColor(context, event.color)
-                    texts[index].text = event.iconChar.toString()
-                    views[index].visibility = View.VISIBLE
-                    texts[index].visibility = View.VISIBLE
+                if (index < profileViews.size) {
+                    profileViews[index].background = changeBackgroundColor(context, event.color)
+                    profileViews[index].text = event.iconChar.toString()
+                    profileViews[index].visibility = View.VISIBLE
                 }
             }
             // Set the rest of the view invisible.
-            for (i in event.size until views.size) {
-                views[i].visibility = View.INVISIBLE
-                texts[i].visibility = View.INVISIBLE
+            for (i in event.size until profileViews.size) {
+                profileViews[i].visibility = View.INVISIBLE
             }
 
             // For no events, set all the views as invisible.
         } else {
-            views.forEach { view ->
+            profileViews.forEach { view ->
                 view.visibility = View.INVISIBLE
-            }
-            texts.forEach { text ->
-                text.visibility = View.INVISIBLE
             }
         }
     }
