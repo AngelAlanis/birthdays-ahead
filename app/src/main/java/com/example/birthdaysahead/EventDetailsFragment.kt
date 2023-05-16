@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.birthdaysahead.databinding.FragmentEventDetailsBinding
 import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.utils.changeBackgroundColor
+import com.example.birthdaysahead.utils.lightenColor
 import com.example.birthdaysahead.viewmodel.EventViewModel
 
 class EventDetailsFragment : Fragment() {
@@ -16,10 +17,6 @@ class EventDetailsFragment : Fragment() {
     private lateinit var binding: FragmentEventDetailsBinding
     private lateinit var event: Event
     private val sharedViewModel: EventViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +43,12 @@ class EventDetailsFragment : Fragment() {
         binding.profileWishes.text = event.formattedWishes
         binding.profileLikes.text = event.formattedLikes
         binding.profileDislikes.text = event.formattedDislikes
+
+        val blendRatio = 0.3f
+        binding.cardNotes.setCardBackgroundColor(lightenColor(event.color, blendRatio))
+        binding.cardWishes.setCardBackgroundColor(lightenColor(event.color, blendRatio))
+        binding.cardLikes.setCardBackgroundColor(lightenColor(event.color, blendRatio))
+        binding.cardDislikes.setCardBackgroundColor(lightenColor(event.color, blendRatio))
     }
 
 }
