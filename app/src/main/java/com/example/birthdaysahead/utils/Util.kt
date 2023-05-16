@@ -13,3 +13,24 @@ fun changeBackgroundColor(context: Context, color: Int): Drawable? {
 
     return drawable
 }
+
+fun List<String>?.formatListWithDash(): String {
+    val formattedList = StringBuilder()
+    if (this != null) {
+        for (item in this) {
+            formattedList.append("- $item\n")
+        }
+    }
+    return formattedList.toString().trimEnd()
+}
+
+fun List<String>?.formatListWithNumbers(): String {
+    val formattedList = StringBuilder()
+    if (this != null) {
+        for ((index, item) in this.withIndex()) {
+            val number = index + 1
+            formattedList.append("$number. $item\n")
+        }
+    }
+    return formattedList.toString().trimEnd()
+}
