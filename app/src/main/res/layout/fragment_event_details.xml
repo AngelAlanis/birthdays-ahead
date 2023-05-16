@@ -79,13 +79,15 @@
                     style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/notes" />
+                    android:text="@string/notes"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/profile_notes"
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     tools:text="Remember to bring a birthday cake and balloons for the party. The theme is superheroes, so feel free to dress up and bring your favorite superhero accessories. Looking forward to celebrating with you!" />
             </LinearLayout>
 
@@ -113,13 +115,15 @@
                     style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/gift_wishes" />
+                    android:text="@string/gift_wishes"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/profile_wishes"
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     tools:text="- Bluetooth headphones \n- A new cookbook \n- Outdoor camping gear \n- Fitness tracker \n- Gift cards to favorite coffee shops \n- Board games for game nights \n- Spa gift certificate for a relaxing massage" />
             </LinearLayout>
 
@@ -147,13 +151,15 @@
                     style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/likes" />
+                    android:text="@string/likes"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/profile_likes"
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     tools:text="1. Playing guitar \n2. Watching movies \n3. Traveling to new places \n4. Trying out new restaurants \n5. Reading mystery novels" />
             </LinearLayout>
 
@@ -181,13 +187,15 @@
                     style="@style/TextAppearance.Material3.TitleSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/dislikes" />
+                    android:text="@string/dislikes"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/profile_dislikes"
                     style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     tools:text="1. Spicy food \n2. Waking up early \n3. Crowded places \n4.Horror movies \n5.Cold weather" />
             </LinearLayout>
 
