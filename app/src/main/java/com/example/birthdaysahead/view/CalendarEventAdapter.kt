@@ -1,37 +1,44 @@
 package com.example.birthdaysahead.view
 
-import android.content.Context
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.birthdaysahead.R
 import com.example.birthdaysahead.databinding.CalendarSelectedEventBinding
 import com.example.birthdaysahead.model.Event
+import com.example.birthdaysahead.model.EventProvider.events
+import com.example.birthdaysahead.utils.changeBackgroundColor
 
-class CalendarEventAdapter : RecyclerView.Adapter<CalendarEventAdapter.CalendarEventHolder>() {
+class CalendarEventAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<CalendarEventAdapter.CalendarEventHolder>() {
 
     val eventsList = mutableListOf<Event>()
 
-    class CalendarEventHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    interface OnItemClickListener {
+        fun onItemClick(event: Event)
+    }
+
+
+    inner class CalendarEventHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CalendarSelectedEventBinding.bind(view)
         private val context = view.context
+
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val event = eventsList[position]
+                    listener.onItemClick(event)
+                }
+            }
+        }
 
         fun bind(event: Event) {
             binding.profileIcon.background = changeBackgroundColor(context, event.color)
             binding.profileChar.text = event.iconChar.toString()
             binding.profileText.text = context.getString(R.string.profile_birthday, event.name)
-        }
-
-        private fun changeBackgroundColor(context: Context, color: Int): Drawable? {
-            val drawable =
-                ContextCompat.getDrawable(context, R.drawable.day_profile_background)?.mutate()
-            drawable?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-
-            return drawable
         }
 
     }

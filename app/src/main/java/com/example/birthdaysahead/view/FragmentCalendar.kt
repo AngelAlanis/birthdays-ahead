@@ -10,6 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.birthdaysahead.R
@@ -19,6 +21,7 @@ import com.example.birthdaysahead.databinding.FragmentCalendarBinding
 import com.example.birthdaysahead.model.Event
 import com.example.birthdaysahead.model.EventProvider
 import com.example.birthdaysahead.utils.changeBackgroundColor
+import com.example.birthdaysahead.viewmodel.EventViewModel
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -31,12 +34,14 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
+class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener, CalendarEventAdapter.OnItemClickListener {
 
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
 
-    private val eventsAdapter = CalendarEventAdapter()
+    private val sharedViewModel: EventViewModel by activityViewModels()
+
+    private val eventsAdapter = CalendarEventAdapter(this)
     var events = mutableMapOf<LocalDate, List<Event>>()
 
     private val selectionFormatter = DateTimeFormatter.ofPattern("d MMM yyyy")
@@ -45,8 +50,6 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
     private val today = LocalDate.now()
     private var selectedDate: LocalDate? = null
-
-    private var eventCreationListener: NewEventFragment.EventCreationListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,7 +142,8 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
                 // Put the views in a list to iterate through them.
                 val profileViews = listOf(profileView1, profileView2, profileView3, profileView4)
 
-                textView.text = data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
+                textView.text =
+                    data.date.dayOfMonth.toString() // Set the number of day for the current day of the month.
 
                 // Validation so in or out dates are not affected.
                 if (data.position == DayPosition.MonthDate) {
@@ -309,5 +313,12 @@ class FragmentCalendar : Fragment(), NewEventFragment.EventCreationListener {
 
     override fun onEventCreated(event: Event) {
         addEventToMap(event)
+    }
+
+    override fun onItemClick(event: Event) {
+        sharedViewModel.setEvent(event)
+
+        val action = FragmentCalendarDirections.actionFragmentCalendarToEventDetailsFragment()
+        view?.findNavController()?.navigate(action)
     }
 }
