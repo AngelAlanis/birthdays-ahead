@@ -9,5 +9,15 @@
         android:id="@+id/fragmentCalendar"
         android:name="com.example.birthdaysahead.view.FragmentCalendar"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_fragmentCalendar_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.example.birthdaysahead.EventDetailsFragment"
+        android:label="fragment_event_details"
+        tools:layout="@layout/fragment_event_details" >
+    </fragment>
 </navigation>
