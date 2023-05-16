@@ -12,4 +12,9 @@
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
     <string name="type_of_event">Type of Event</string>
+    <string name="birthday">Birthday</string>
+    <string name="notes">Notes</string>
+    <string name="gift_wishes">Gift wishes</string>
+    <string name="likes">Likes</string>
+    <string name="dislikes">Dislikes</string>
 </resources>
