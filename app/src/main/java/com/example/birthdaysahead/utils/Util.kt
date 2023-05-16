@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import com.example.birthdaysahead.R
 
 
@@ -33,4 +34,8 @@ fun List<String>?.formatListWithNumbers(): String {
         }
     }
     return formattedList.toString().trimEnd()
+}
+
+fun lightenColor(color: Int, ratio: Float): Int {
+    return ColorUtils.blendARGB(color, 0xFFFFFFFF.toInt(), ratio)
 }
